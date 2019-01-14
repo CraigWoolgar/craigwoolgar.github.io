@@ -1,0 +1,173 @@
+{
+   "Human":{
+   "base_height_ft": 4,
+   "base_height_in": 8,
+   "base_weight_lb": 110,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 10,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 4
+   },
+   "Dwarf, hill": {
+   "base_height_ft": 3,
+   "base_height_in": 8,
+   "base_weight_lb": 115,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 4,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 6
+ },
+   "Dwarf, mountain": {
+   "base_height_ft": 4,
+   "base_height_in": 0,
+   "base_weight_lb": 130,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 4,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 6
+ },
+   "Elf, high": {
+   "base_height_ft": 4,
+   "base_height_in": 6,
+   "base_weight_lb": 90,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 10,
+   "weight_x_dice_cnt": 1,
+   "weight_x_dice_face": 4
+ },
+   "Elf, wood": {
+   "base_height_ft": 4,
+   "base_height_in": 6,
+   "base_weight_lb": 100,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 10,
+   "weight_x_dice_cnt": 1,
+   "weight_x_dice_face": 4
+ },
+   "Halfling": {
+   "base_height_ft": 2,
+   "base_height_in": 7,
+   "base_weight_lb": 35,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 4,
+   "weight_x_dice_cnt": 1,
+   "weight_x_dice_face": 1
+ },
+   "Aasimar": {
+   "base_height_ft": 4,
+   "base_height_in": 8,
+   "base_weight_lb": 110,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 10,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 4
+ },
+   "Bugbear": {
+   "base_height_ft": 6,
+   "base_height_in": 0,
+   "base_weight_lb": 200,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 12,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 6
+ },
+   "Firbolg": {
+   "base_height_ft": 6,
+   "base_height_in": 2,
+   "base_weight_lb": 175,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 12,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 6
+ },
+   "Goblin": {
+   "base_height_ft": 3,
+   "base_height_in": 5,
+   "base_weight_lb": 35,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 4,
+   "weight_x_dice_cnt": 1,
+   "weight_x_dice_face": 1
+ },
+   "Goliath": {
+   "base_height_ft": 6,
+   "base_height_in": 2,
+   "base_weight_lb": 200,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 10,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 6
+ },
+   "Hobgoblin": {
+   "base_height_ft": 4,
+   "base_height_in": 8,
+   "base_weight_lb": 11,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 10,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 4
+ },
+   "Kenku": {
+   "base_height_ft": 4,
+   "base_height_in": 4,
+   "base_weight_lb": 50,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 8,
+   "weight_x_dice_cnt": 1,
+   "weight_x_dice_face": 6
+ },
+   "Kobold": {
+   "base_height_ft": 2,
+   "base_height_in": 1,
+   "base_weight_lb": 25,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 4,
+   "weight_x_dice_cnt": 1,
+   "weight_x_dice_face": 1
+ },
+   "Lizardfolk": {
+   "base_height_ft": 4,
+   "base_height_in": 9,
+   "base_weight_lb": 120,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 10,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 6
+ },
+   "Orc": {
+   "base_height_ft": 5,
+   "base_height_in": 4,
+   "base_weight_lb": 175,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 8,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 6
+ },
+   "Tabaxi": {
+   "base_height_ft": 4,
+   "base_height_in": 10,
+   "base_weight_lb": 90,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 10,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 4
+ },
+   "Triton": {
+   "base_height_ft": 4,
+   "base_height_in": 6,
+   "base_weight_lb": 90,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 10,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 4
+ },
+   "Yuan-ti": {
+   "base_height_ft": 4,
+   "base_height_in": 8,
+   "base_weight_lb": 110,
+   "height_x_dice_cnt": 2,
+   "height_x_dice_face": 10,
+   "weight_x_dice_cnt": 2,
+   "weight_x_dice_face": 4
+ }
+}

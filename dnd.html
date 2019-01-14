@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>D&D Charcter Roller</title>
+    <script type="text/javascript" src="character.js"></script>
+    <script type="text/javascript" src="characteristics.js"></script>
+    <link rel="stylesheet" href="site.css" />
+</head>
+
+<body>
+    <h1>Charcter Roller</h1>
+
+    <div>
+        <select id="race">
+            <option value="aasimar">Aasimar</option>
+            <option value="bugbear">Bugbear</option>
+            <option value="dragonborn">Dragonborn</option>
+            <option value="dwarf, hill">Dwarf, hill</option>
+            <option value="dwarf, mountain">Dwarf, mountain</option>
+            <option value="elf, drow">Elf, drow</option>
+            <option value="elf, high">Elf, high</option>
+            <option value="elf, wood">Elf, wood</option>
+            <option value="firbolg">Firbolg</option>
+            <option value="gnome">Gnome</option>
+            <option value="goblin">Goblin</option>
+            <option value="goliath">Goliath</option>
+            <option value="half-elf">Half-elf</option>
+            <option value="halfling">Halfling</option>
+            <option value="half-orc">Half-orc</option>
+            <option value="hobgoblin">Hobgoblin</option>
+            <option value="human">Human</option>
+            <option value="kenku">Kenku</option>
+            <option value="kobold">Kobold</option>
+            <option value="lizardfolk">Lizardfolk</option>
+            <option value="orc">Orc</option>
+            <option value="tabaxi">Tabaxi</option>
+            <option value="tiefling">Tiefling</option>
+            <option value="triton">Triton</option>
+            <option value="yuan-ti">Yuan-ti</option>
+        </select>
+    </div>
+    <div>
+        <button onclick="bmi()">Run</button>
+    </div>
+
+    <table>
+        <th>Height</th>
+        <th>Weight</th>
+        <th></th>
+        <tr>
+            <td id="height_val"></td>
+            <td id="weight_val"></td>
+            <td id="proportions_val"></td>
+        </tr>
+    </table>
+    <br/>
+    <button onclick="roll()">Roll Stats</button>
+    <table>
+        <th>Rolls</th>
+        <th>Removed</th>
+        <th>Sum</th>
+        <th>Modifier</th>
+        <tr>
+        <td id="rolls1"></td>
+        <td id="removed1"></td>
+        <td id="sum1"></td>
+        <td id="modifier1"></td>
+    </tr>
+    <tr>
+        <td id="rolls2"></td>
+        <td id="removed2"></td>
+        <td id="sum2"></td>
+        <td id="modifier2"></td>
+    </tr>
+    <tr>
+        <td id="rolls3"></td>
+        <td id="removed3"></td>
+        <td id="sum3"></td>
+        <td id="modifier3"></td>
+    </tr>
+    <tr>
+        <td id="rolls4"></td>
+        <td id="removed4"></td>
+        <td id="sum4"></td>
+        <td id="modifier4"></td>
+    </tr>
+    <tr>
+        <td id="rolls5"></td>
+        <td id="removed5"></td>
+        <td id="sum5"></td>
+        <td id="modifier5"></td>
+    </tr>
+    <tr>
+        <td id="rolls6"></td>
+        <td id="removed6"></td>
+        <td id="sum6"></td>
+        <td id="modifier6"></td>
+    </tr>
+    </table>
+<br/>
+
+
+
+</body>
+
+</html>
