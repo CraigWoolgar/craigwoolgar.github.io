@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Around The World - The Woodchip Way</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+
+<body>
+  <div id="map" style="height: 98vh;"></div>
+
+  <script>
+    var map = L.map('map').setView([51.3, -0.5], 8); // Centered near the airports
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    visitedAirports = [
+    { name: 'Pointe Vele Airport, Wallis and Futuna', icao: 'NLWF', lon: -178.066, lat: -14.3114 },
+    ];
+
+    var optimizedAirports = [
+      { name: 'Pointe Vele Airport, Wallis and Futuna', icao: 'NLWF', lon: -178.066, lat: -14.3114 },
+      { name: 'Fua\'amotu International Airport, Tonga', icao: 'NFTF', lon: -175.15, lat: -21.2412 },
+      { name: 'Asau Airport, Tokelau', icao: 'NSAU', lon: -172.628, lat: -13.5051 },
+      { name: 'Fagali\'i Airport, Samoa', icao: 'NSFI', lon: -171.74, lat: -13.8487 },
+      { name: 'Niue International Airport (Hanan International), Niue', icao: 'NIUE', lon: -169.926, lat: -19.079 },
+      { name: 'Niue International Airport (Hanan International), Norfolk Island', icao: 'NIUE', lon: -169.926, lat: -19.079 },
+      { name: 'Fitiuta Airport, American Samoa', icao: 'NSFQ', lon: -169.425, lat: -14.2172 },
+      { name: 'Aitutaki Airport, Cook Islands', icao: 'NCAI', lon: -159.764, lat: -18.8309 },
+      { name: 'Moorea Airport (Temae Airport), French Polynesia', icao: 'NTTM', lon: -149.762, lat: -17.49 },
+      { name: 'Totegegie Airport (Gambier Island Airport), Pitcairn Islands', icao: 'NTGJ', lon: -134.89, lat: -23.0799 },
+      { name: 'Hermanos Serdan International Airport, Mexico', icao: 'MMPB', lon: -98.3714, lat: 19.1581 },
+      { name: 'Quetzaltenango Airport, Guatemala', icao: 'MGQZ', lon: -91.502, lat: 14.8656 },
+      { name: 'Ilopango International Airport, El Salvador', icao: 'MSSS', lon: -89.1151, lat: 13.6959 },
+      { name: 'Philip S. W. Goldson International Airport, Belize', icao: 'MZBZ', lon: -88.3082, lat: 17.5391 },
+      { name: 'Ramon Villeda Morales International Airport, Honduras', icao: 'MHLM', lon: -87.9236, lat: 15.4526 },
+      { name: 'Daniel Oduber Quiros International Airport, Costa Rica', icao: 'MRLB', lon: -85.5444, lat: 10.5933 },
+      { name: 'Corn Island Airport, Nicaragua', icao: 'MNCI', lon: -83.0638, lat: 12.1629 },
+      { name: 'Jose Joaquin de Olmedo International Airport, Ecuador', icao: 'SEGU', lon: -79.8836, lat: -2.15742 },
+      { name: 'Rodriguez Ballon International Airport, Peru', icao: 'SPQU', lon: -71.5831, lat: -16.3411 },
+      { name: 'Cerro Moreno International Airport, Chile', icao: 'SCFA', lon: -70.4451, lat: -23.4445 },
+      { name: 'Ingeniero Aeronautico Ambrosio L.V. Taravella International Airport (Pajas Blancas), Argentina', icao: 'SACO', lon: -64.208, lat: -31.3236 },
+      { name: 'RAF Mount Pleasant, Falkland Islands [Islas Malvinas]', icao: 'EGYP', lon: -58.4472, lat: -51.8228 },
+      { name: 'Capitan de Corbeta Carlos A. Curbelo International Airport, Uruguay', icao: 'SULS', lon: -55.0943, lat: -34.8551 },
+      { name: 'Guarani  International Airport, Paraguay', icao: 'SGES', lon: -54.8427, lat: -25.4545 },
+      { name: 'Guarulhos International Airport, Brazil', icao: 'SBGR', lon: -46.4692, lat: -23.4322 },
+      { name: 'Viru Viru International Airport, Bolivia', icao: 'SLVR', lon: -63.1354, lat: -17.6448 },
+      { name: 'Grand-Santi Airport, French Guiana', icao: 'SOGS', lon: -54.3731, lat: 4.28583 },
+      { name: 'Johan Adolf Pengel International Airport, Suriname', icao: 'SMJP', lon: -55.1878, lat: 5.45283 },
+      { name: 'Lethem Airport, Guyana', icao: 'SYLT', lon: -59.7894, lat: 3.37276 },
+      { name: 'Jose Maria Cordova International Airport, Colombia', icao: 'SKRG', lon: -75.4231, lat: 6.16454 },
+      { name: 'Enrique Adolfo Jimenez Airport, Panama', icao: 'MPEJ', lon: -79.8674, lat: 9.35664 },
+      { name: 'La Chinita International Airport, Venezuela', icao: 'SVMC', lon: -71.7279, lat: 10.5582 },
+      { name: 'Queen Beatrix International Airport, Aruba', icao: 'TNCA', lon: -70.0152, lat: 12.5014 },
+      { name: 'Maurice Bishop International Airport, Grenada', icao: 'TGPY', lon: -61.7862, lat: 12.0042 },
+      { name: 'Arthur Napoleon Raymond Robinson International Airport, Trinidad and Tobago', icao: 'TTCP', lon: -60.8322, lat: 11.1497 },
+      { name: 'Grantley Adams International Airport, Barbados', icao: 'TBPB', lon: -59.4925, lat: 13.0746 },
+      { name: 'J. F. Mitchell Airport, Saint Vincent and the Grenadines', icao: 'TVSB', lon: -61.262, lat: 12.9884 },
+      { name: 'Hewanorra International Airport, Saint Lucia', icao: 'TLPL', lon: -60.9526, lat: 13.7332 },
+      { name: 'Martinique Aime Cesaire International Airport, Martinique', icao: 'TFFF', lon: -61.0032, lat: 14.591 },
+      { name: 'Douglas-Charles Airport, Dominica', icao: 'TDPD', lon: -61.3, lat: 15.547 },
+      { name: 'Baillif Airport, Guadeloupe', icao: 'TFFB', lon: -61.7422, lat: 16.0133 },
+      { name: 'V. C. Bird International Airport, Antigua and Barbuda', icao: 'TAPA', lon: -61.7927, lat: 17.1367 },
+      { name: 'John A. Osborne Airport, Montserrat', icao: 'TRPG', lon: -62.1933, lat: 16.7914 },
+      { name: 'Vance W. Amory International Airport, Saint Kitts and Nevis', icao: 'TKPN', lon: -62.5899, lat: 17.2057 },
+      { name: 'Clayton J. Lloyd International Airport, Anguilla', icao: 'TQPF', lon: -63.0551, lat: 18.2048 },
+      { name: 'Virgin Gorda Airport, British Virgin Islands', icao: 'TUPW', lon: -64.4275, lat: 18.4464 },
+      { name: 'Henry E. Rohlsen Airport, U.S. Virgin Islands', icao: 'TISX', lon: -64.7986, lat: 17.7019 },
+      { name: 'Fernando Luis Ribas Dominicci Airport, Puerto Rico', icao: 'TJIG', lon: -66.0981, lat: 18.4568 },
+      { name: 'Cibao International Airport, Dominican Republic', icao: 'MDST', lon: -70.6047, lat: 19.4061 },
+      { name: 'Hugo Chavez International Airport, Haiti', icao: 'MTCH', lon: -72.1947, lat: 19.733 },
+      { name: 'Providenciales International Airport, Turks and Caicos Islands', icao: 'MBPV', lon: -72.2659, lat: 21.7736 },
+      { name: 'Antonio Maceo International Airport, Cuba', icao: 'MUCU', lon: -75.8354, lat: 19.9698 },
+      { name: 'Sangster International Airport, Jamaica', icao: 'MKJS', lon: -77.9134, lat: 18.5037 },
+      { name: 'Charles Kirkconnell International Airport, Cayman Islands', icao: 'MWCB', lon: -79.8828, lat: 19.687 },
+      { name: 'Grand Bahama International Airport, Bahamas', icao: 'MYGF', lon: -78.6956, lat: 26.5587 },
+      { name: 'L.F. Wade International Airport, Bermuda', icao: 'TXKF', lon: -64.6787, lat: 32.364 },
+      { name: 'John F. Kennedy International Airport, United States', icao: 'KJFK', lon: -73.7789, lat: 40.6397 },
+      { name: 'Toronto Pearson International Airport, Canada', icao: 'CYYZ', lon: -79.6227, lat: 43.6797 },
+      { name: 'Saint-Pierre Airport, Saint Pierre and Miquelon', icao: 'LFVP', lon: -56.1731, lat: 46.7629 },
+      { name: 'Sisimiut Airport, Greenland', icao: 'BGSS', lon: -53.7293, lat: 66.9513 },
+      { name: 'ReykjavÃ­k Airport, Iceland', icao: 'BIRK', lon: -21.9406, lat: 64.13 },
+      { name: 'Svalbard Airport, Svalbard and Jan Mayen', icao: 'ENSB', lon: 15.4656, lat: 78.2461 },
+      { name: 'Vagar Airport, Faroe Islands', icao: 'EKVG', lon: -7.27722, lat: 62.0636 },
+      { name: 'Glasgow Airport, Scotland', icao: 'EGPF', lon: -4.43306, lat: 55.8719 },
+      { name: 'City of Derry Airport, Northern Island', icao: 'EGAE', lon: -7.16111, lat: 55.0428 },
+      { name: 'Isle of Man Airport, Isle of Man', icao: 'EGNS', lon: -4.62333, lat: 54.0833 },
+      { name: 'Hawarden Airport (Chester Airport), Wales', icao: 'EGNR', lon: -2.97778, lat: 53.1781 },
+      { name: 'Birmingham Airport, England', icao: 'EGBB', lon: -1.74803, lat: 52.4539 },
+      { name: 'Cork Airport, Ireland', icao: 'EICK', lon: -8.49111, lat: 51.8413 },
+      { name: 'Guernsey Airport, Guernsey', icao: 'EGJB', lon: -2.60194, lat: 49.4347 },
+      { name: 'Jersey Airport, Jersey', icao: 'EGJJ', lon: -2.19528, lat: 49.2081 },
+      { name: 'Francisco SÃ¡ Carneiro Airport, Portugal', icao: 'LPPR', lon: -8.67806, lat: 41.2356 },
+      { name: 'Gibraltar International Airport (North Front Airport), Gibraltar', icao: 'LXGB', lon: -5.34966, lat: 36.1512 },
+      { name: 'Mohammed V International Airport, Morocco', icao: 'GMMN', lon: -7.58997, lat: 33.3675 },
+      { name: 'Dakhla Airport, Western Sahara', icao: 'GMMH', lon: -15.932, lat: 23.7183 },
+      { name: 'Nouadhibou International Airport, Mauritania', icao: 'GQPP', lon: -17.03, lat: 20.9331 },
+      { name: 'Cesaria Evora Airport, Cape Verde', icao: 'GVSV', lon: -25.0553, lat: 16.8332 },
+      { name: 'Saint-Louis Airport, Senegal', icao: 'GOSS', lon: -16.4632, lat: 16.0508 },
+      { name: 'Banjul International Airport, Gambia', icao: 'GBYD', lon: -16.6522, lat: 13.338 },
+      { name: 'Bubaque Airport, Guinea-Bissau', icao: 'GGBU', lon: -15.8381, lat: 11.2974 },
+      { name: 'Hastings Airport, Sierra Leone', icao: 'GFHA', lon: -13.1291, lat: 8.39713 },
+      { name: 'Spriggs Payne Airport, Liberia', icao: 'GLMR', lon: -10.7587, lat: 6.28906 },
+      { name: 'Nzerekore Airport, Guinea', icao: 'GUNZ', lon: -8.7018, lat: 7.80602 },
+      { name: 'Bobo Dioulasso Airport, Burkina Faso', icao: 'DFOO', lon: -4.33097, lat: 11.1601 },
+      { name: 'Port Bouet Airport (Felix Houphouet Boigny International), Côte d\'Ivoire', icao: 'DIAP', lon: -3.92629, lat: 5.26139 },
+      { name: 'Takoradi Airport, Ghana', icao: 'DGTK', lon: -1.77476, lat: 4.89606 },
+      { name: 'Gao International Airport (Korogoussou Airport), Mali', icao: 'GAGO', lon: -0.005456, lat: 16.2484 },
+      { name: 'Niamtougou International Airport, Togo', icao: 'DXNG', lon: 1.09125, lat: 9.76733 },
+      { name: 'Save Airport, Benin', icao: 'DBBS', lon: 2.46458, lat: 8.01817 },
+      { name: 'Murtala Muhammed International Airport, Nigeria', icao: 'DNMM', lon: 3.32116, lat: 6.57737 },
+      { name: 'Zinder Airport, Niger', icao: 'DRZR', lon: 8.98376, lat: 13.779 },
+      { name: 'Douala International Airport, Cameroon', icao: 'FKKD', lon: 9.71948, lat: 4.00608 },
+      { name: 'Bata Airport, Equatorial Guinea', icao: 'FGBT', lon: 9.80568, lat: 1.90547 },
+      { name: 'Principe Airport, São Tomé and Príncipe', icao: 'FPPR', lon: 7.41174, lat: 1.66294 },
+      { name: 'Port-Gentil International Airport, Gabon', icao: 'FOOG', lon: 8.75438, lat: -0.711739 },
+      { name: 'Pointe Noire Airport, Congo [Republic]', icao: 'FCPP', lon: 11.8866, lat: -4.81603 },
+      { name: 'Albano Machado Airport, Angola', icao: 'FNHU', lon: 15.7605, lat: -12.8089 },
+      { name: 'Saint Helena Airport, Saint Helena', icao: 'FHSH', lon: -5.64594, lat: -15.9577 },
+      { name: 'Rundu Airport, Namibia', icao: 'FYRU', lon: 19.7194, lat: -17.9565 },
+      { name: 'Cape Town International Airport, South Africa', icao: 'FACT', lon: 18.6017, lat: -33.9648 },
+      { name: 'Moshoeshoe I International Airport, Lesotho', icao: 'FXMM', lon: 27.5525, lat: -29.4623 },
+      { name: 'Matsapha Airport, Swaziland', icao: 'FDMS', lon: 31.3075, lat: -26.529 },
+      { name: 'Francistown Airport, Botswana', icao: 'FBFT', lon: 27.4745, lat: -21.1596 },
+      { name: 'Joshua Mqabuko Nkomo International Airport, Zimbabwe', icao: 'FVBU', lon: 28.6179, lat: -20.0174 },
+      { name: 'Lubumbashi International Airport, Congo [DRC]', icao: 'FZQA', lon: 27.5309, lat: -11.5913 },
+      { name: 'Simon Mwansa Kapwepwe International Airport, Zambia', icao: 'FLND', lon: 28.6649, lat: -12.9981 },
+      { name: 'Beira Airport, Mozambique', icao: 'FQBR', lon: 34.9076, lat: -19.7964 },
+      { name: 'Chileka International Airport, Malawi', icao: 'FWCL', lon: 34.974, lat: -15.6791 },
+      { name: 'Toamasina Airport, Madagascar', icao: 'FMMT', lon: 49.3925, lat: -18.1095 },
+      { name: 'Pierrefonds Airport, Réunion', icao: 'FMEP', lon: 55.425, lat: -21.3209 },
+      { name: 'Sir Gaetan Duval Airport, Mauritius', icao: 'FIMR', lon: 63.361, lat: -19.7577 },
+      { name: 'Fregate Island Airport, Seychelles', icao: 'FSSF', lon: 55.95, lat: -4.583 },
+      { name: 'Dzaoudzi-Pamandzi International Airport, Mayotte', icao: 'FMCZ', lon: 45.2811, lat: -12.8047 },
+      { name: 'Ouani Airport, Comoros', icao: 'FMCV', lon: 44.4303, lat: -12.1317 },
+      { name: 'Julius Nyerere International Airport, Tanzania', icao: 'HTDA', lon: 39.2026, lat: -6.87811 },
+      { name: 'Moi International Airport, Kenya', icao: 'HKMO', lon: 39.5942, lat: -4.03483 },
+      { name: 'Bujumbura International Airport, Burundi', icao: 'HBBA', lon: 29.3185, lat: -3.32402 },
+      { name: 'Ruhengeri Airport, Rwanda', icao: 'HRYU', lon: 29.633, lat: -1.5 },
+      { name: 'Gulu Airport, Uganda', icao: 'HUGU', lon: 32.2718, lat: 2.80556 },
+      { name: 'Malakal Airport, South Sudan', icao: 'HSSM', lon: 31.6522, lat: 9.55897 },
+      { name: 'Bambari Airport, Central African Republic', icao: 'FEFM', lon: 20.6475, lat: 5.84694 },
+      { name: 'Moundou Airport, Chad', icao: 'FTTD', lon: 16.0714, lat: 8.62441 },
+      { name: 'Benina International Airport, Libya', icao: 'HLLB', lon: 20.2695, lat: 32.0968 },
+      { name: 'Malta International Airport (Luqa Airport), Malta', icao: 'LMML', lon: 14.4775, lat: 35.8575 },
+      { name: 'Sfax-Thyna International Airport, Tunisia', icao: 'DTTX', lon: 10.691, lat: 34.718 },
+      { name: 'Oran Es Senia Airport, Algeria', icao: 'DAOO', lon: -0.621183, lat: 35.6239 },
+      { name: 'Andorra La Seu d\'Urgell Airport, Andorra', icao: 'LESU', lon: 1.40917, lat: 42.3386 },
+      { name: 'Barcelona El Prat Airport, Spain', icao: 'LEBL', lon: 2.07846, lat: 41.2971 },
+      { name: 'Marseille Provence Airport, France', icao: 'LFML', lon: 5.22142, lat: 43.4393 },
+      { name: 'Nice Cote d\'Azur Airport, Monaco', icao: 'LFMN', lon: 7.21587, lat: 43.6584 },
+      { name: 'Milan-Malpensa Airport, Italy', icao: 'LIMC', lon: 8.72811, lat: 45.6306 },
+      { name: 'St. Gallen-Altenrhein Airport, Liechtenstein', icao: 'LSZR', lon: 9.56077, lat: 47.485 },
+      { name: 'Zurich Airport, Switzerland', icao: 'LSZH', lon: 8.54917, lat: 47.4647 },
+      { name: 'Luxembourg Findel Airport, Luxembourg', icao: 'ELLX', lon: 6.20444, lat: 49.6233 },
+      { name: 'Antwerp International Airport, Belgium', icao: 'EBAW', lon: 4.46028, lat: 51.1894 },
+      { name: 'Rotterdam The Hague Airport, Netherlands', icao: 'EHRD', lon: 4.43722, lat: 51.9569 },
+      { name: 'Hamburg Airport, Germany', icao: 'EDDH', lon: 9.98823, lat: 53.6304 },
+      { name: 'Aarhus Airport, Denmark', icao: 'EKAH', lon: 10.619, lat: 56.3 },
+      { name: 'Bergen Airport, Norway', icao: 'ENBR', lon: 5.21814, lat: 60.2934 },
+      { name: 'Goteborg Landvetter Airport, Sweden', icao: 'ESGG', lon: 12.2798, lat: 57.6628 },
+      { name: 'Tampere-Pirkkala Airport, Finland', icao: 'EFTP', lon: 23.6044, lat: 61.4141 },
+      { name: 'Pulkovo Airport, Russia', icao: 'ULLI', lon: 30.2625, lat: 59.8003 },
+      { name: 'Tartu Airport, Estonia', icao: 'EETU', lon: 26.6904, lat: 58.3075 },
+      { name: 'Daugavpils International Airport, Latvia', icao: 'EVDA', lon: 26.665, lat: 55.9447 },
+      { name: 'Kaunas International Airport, Lithuania', icao: 'EYKA', lon: 24.0848, lat: 54.9639 },
+      { name: 'Debrecen International Airport, Hungary', icao: 'LHDC', lon: 21.6153, lat: 47.4889 },
+      { name: 'Kosice International Airport, Slovakia', icao: 'LZKZ', lon: 21.2411, lat: 48.6631 },
+      { name: 'John Paul II International Airport Krakow-Balice, Poland', icao: 'EPKK', lon: 19.7848, lat: 50.0777 },
+      { name: 'Brno-Turany Airport, Czech Republic', icao: 'LKTB', lon: 16.6944, lat: 49.1513 },
+      { name: 'Graz Airport, Austria', icao: 'LOWG', lon: 15.4396, lat: 46.9911 },
+      { name: 'Maribor Edvard Rusjan Airport, Slovenia', icao: 'LJMB', lon: 15.6861, lat: 46.4799 },
+      { name: 'Federico Fellini International Airport, San Marino', icao: 'LIPR', lon: 12.6117, lat: 44.0203 },
+      { name: 'Rome-Ciampino International Airport, Vatican City', icao: 'LIRA', lon: 12.5929, lat: 41.7991 },
+      { name: 'Split Airport, Croatia', icao: 'LDSP', lon: 16.298, lat: 43.5389 },
+      { name: 'Banja Luka International Airport, Bosnia and Herzegovina', icao: 'LQBK', lon: 17.2975, lat: 44.9414 },
+      { name: 'Tivat Airport, Montenegro', icao: 'LYTV', lon: 18.7233, lat: 42.4047 },
+      { name: 'Kukës International Airport, Albania', icao: 'LAKU', lon: 20.414944, lat: 42.032833 },
+      { name: 'Ohrid St. Paul the Apostle Airport, Macedonia [FYROM]', icao: 'LWOH', lon: 20.7423, lat: 41.18 },
+      { name: 'Pristina Adem Jashari Airport, Kosovo', icao: 'BKPR', lon: 21.0294, lat: 42.5745 },
+      { name: 'Nis Constantine the Great Airport, Serbia', icao: 'LYNI', lon: 21.8537, lat: 43.3373 },
+      { name: 'Thessaloniki Airport, Greece', icao: 'LGTS', lon: 22.9709, lat: 40.5197 },
+      { name: 'Plovdiv Airport, Bulgaria', icao: 'LBPD', lon: 24.8508, lat: 42.0678 },
+      { name: 'Istanbul Ataturk Airport, Turkey', icao: 'LTBA', lon: 28.8146, lat: 40.9769 },
+      { name: 'Mihail Kogalniceanu International Airport, Romania', icao: 'LRCK', lon: 28.4883, lat: 44.3622 },
+      { name: 'Chisinau International Airport, Moldova', icao: 'LUKK', lon: 28.931, lat: 46.9277 },
+      { name: 'Gomel Airport, Belarus', icao: 'UMGG', lon: 31.0167, lat: 52.527 },
+      { name: 'Kharkiv International Airport (Osnova Airport), Ukraine', icao: 'UKHH', lon: 36.29, lat: 49.9248 },
+      { name: 'David the Builder Kutaisi International Airport, Georgia', icao: 'UGKO', lon: 42.4826, lat: 42.1767 },
+      { name: 'Gyumri Shirak Airport, Armenia', icao: 'UDSG', lon: 43.8593, lat: 40.7504 },
+      { name: 'Ganja International Airport (formerly KVD), Azerbaijan', icao: 'UBBG', lon: 46.3176, lat: 40.7377 },
+      { name: 'Aleppo International Airport, Syria', icao: 'OSAP', lon: 37.2244, lat: 36.1807 },
+      { name: 'Rene Mouawad Air Base (Kleyate Airport), Lebanon', icao: 'OLKA', lon: 36.0113, lat: 34.5893 },
+      { name: 'Larnaca International Airport, Cyprus', icao: 'LCLK', lon: 33.6249, lat: 34.8751 },
+      { name: 'Haifa Airport (Uri Michaeli Airport), Israel', icao: 'LLHA', lon: 35.0431, lat: 32.8094 },
+      { name: 'Queen Alia International Airport, Palestinian Territories', icao: 'OJAI', lon: 35.9932, lat: 31.7226 },
+      { name: 'Beersheba Airport, Gaza Strip', icao: 'LLBS', lon: 34.723, lat: 31.287 },
+      { name: 'Borg El Arab Airport, Egypt', icao: 'HEBA', lon: 29.6964, lat: 30.9177 },
+      { name: 'King Hussein International Airport, Jordan', icao: 'OJAQ', lon: 35.0181, lat: 29.6116 },
+      { name: 'King Abdulaziz International Airport, Saudi Arabia', icao: 'OEJN', lon: 39.1565, lat: 21.6796 },
+      { name: 'Port Sudan New International Airport, Sudan', icao: 'HSPN', lon: 37.2341, lat: 19.4336 },
+      { name: 'Asmara International Airport, Eritrea', icao: 'HHAS', lon: 38.9107, lat: 15.2919 },
+      { name: 'Aba Tenna Dejazmach Yilma International Airport, Ethiopia', icao: 'HADR', lon: 41.8542, lat: 9.6247 },
+      { name: 'Hargeisa International Airport (Egal International), Somalia', icao: 'HCMH', lon: 44.0824, lat: 9.51321 },
+      { name: 'Ali-Sabieh Airport, Djibouti', icao: 'HDAS', lon: 42.72, lat: 11.1469 },
+      { name: 'Aden International Airport, Yemen', icao: 'OYAA', lon: 45.0288, lat: 12.8295 },
+      { name: 'Salalah International Airport, Oman', icao: 'OOSA', lon: 54.0913, lat: 17.0387 },
+      { name: 'Dubai International Airport, United Arab Emirates', icao: 'OMDB', lon: 55.3644, lat: 25.2528 },
+      { name: 'Doha International Airport, Qatar', icao: 'OTBD', lon: 51.5651, lat: 25.2611 },
+      { name: 'Bahrain International Airport, Bahrain', icao: 'OBBI', lon: 50.6336, lat: 26.2708 },
+      { name: 'Kuwait International Airport, Kuwait', icao: 'OKBK', lon: 47.9689, lat: 29.2266 },
+      { name: 'Basra International Airport, Iraq', icao: 'ORMM', lon: 47.6621, lat: 30.5491 },
+      { name: 'Mashhad International Airport (Shahid Hashemi Nejad Airport), Iran', icao: 'OIMM', lon: 59.641, lat: 36.2352 },
+      { name: 'Turkmenabat Airport, Turkmenistan', icao: 'UTAV', lon: 63.6133, lat: 39.0833 },
+      { name: 'Samarkand International Airport, Uzbekistan', icao: 'UTSS', lon: 66.9838, lat: 39.7005 },
+      { name: 'Khujand Airport, Tajikistan', icao: 'UTDL', lon: 69.6947, lat: 40.2154 },
+      { name: 'Osh Airport, Kyrgyzstan', icao: 'UCFO', lon: 72.7933, lat: 40.609 },
+      { name: 'Almaty International Airport, Kazakhstan', icao: 'UAAA', lon: 77.0405, lat: 43.3521 },
+      { name: 'Bayankhongor Airport, Mongolia', icao: 'ZMBH', lon: 100.704, lat: 46.1633 },
+      { name: 'Sondok Airport, North Korea', icao: 'ZKSD', lon: 127.474, lat: 39.7452 },
+      { name: 'Narita International Airport, Japan', icao: 'RJAA', lon: 140.386, lat: 35.7653 },
+      { name: 'Gimhae International Airport, South Korea', icao: 'RKPK', lon: 128.938, lat: 35.1795 },
+      { name: 'Shanghai Pudong International Airport, China', icao: 'ZSPD', lon: 121.805, lat: 31.1434 },
+      { name: 'Kaohsiung International Airport, Taiwan', icao: 'RCKH', lon: 120.35, lat: 22.5771 },
+      { name: 'Hong Kong International Airport (Chek Lap Kok Airport), Hong Kong', icao: 'VHHH', lon: 113.915, lat: 22.3089 },
+      { name: 'Macau International Airport, Macau', icao: 'VMMC', lon: 113.592, lat: 22.1496 },
+      { name: 'Tan Son Nhat International Airport, Vietnam', icao: 'VVTS', lon: 106.652, lat: 10.8188 },
+      { name: 'Pakse International Airport, Laos', icao: 'VLPS', lon: 105.781, lat: 15.1321 },
+      { name: 'Siem Reap International Airport, Cambodia', icao: 'VDSR', lon: 103.813, lat: 13.4107 },
+      { name: 'Chiang Mai International Airport, Thailand', icao: 'VTCC', lon: 98.9626, lat: 18.7668 },
+      { name: 'Yangon International Airport, Myanmar [Burma]', icao: 'VYYY', lon: 96.1332, lat: 16.9073 },
+      { name: 'Shah Amanat International Airport, Bangladesh', icao: 'VGEG', lon: 91.8133, lat: 22.2496 },
+      { name: 'Bathpalathang Airport, Bhutan', icao: 'VQBT', lon: 90.7471, lat: 27.5622 },
+      { name: 'Pokhara Airport, Nepal', icao: 'VNPK', lon: 83.9821, lat: 28.2009 },
+      { name: 'Kandahar International Airport, Afghanistan', icao: 'OAKN', lon: 65.8478, lat: 31.5058 },
+      { name: 'Jinnah International Airport, Pakistan', icao: 'OPKC', lon: 67.1608, lat: 24.9065 },
+      { name: 'Chhatrapati Shivaji International Airport, India', icao: 'VABB', lon: 72.8679, lat: 19.0887 },
+      { name: 'Gan International Airport, Maldives', icao: 'VRMG', lon: 73.1556, lat: -0.693342 },
+      { name: 'Mattala Rajapaksa International Airport, Sri Lanka', icao: 'VCRI', lon: 81.1241, lat: 6.28447 },
+      { name: 'Penang International Airport, Malaysia', icao: 'WMKP', lon: 100.277, lat: 5.29714 },
+      { name: 'Singapore Changi Airport, Singapore', icao: 'WSSS', lon: 103.994, lat: 1.35019 },
+      { name: 'Cocos (Keeling) Islands Airport, Cocos [Keeling] Islands', icao: 'YPCC', lon: 96.8306, lat: -12.1886 },
+      { name: 'Christmas Island Airport, Christmas Island', icao: 'YPXM', lon: 105.69, lat: -10.4506 },
+      { name: 'Juanda International Airport, Indonesia', icao: 'WARR', lon: 112.787, lat: -7.37983 },
+      { name: 'Presidente Nicolau Lobato International Airport, Timor-Leste', icao: 'WPDL', lon: 125.526, lat: -8.5464 },
+      { name: 'Sydney Airport (Kingsford Smith Airport), Australia', icao: 'YSSY', lon: 151.177, lat: -33.9461 },
+      { name: 'Auckland Airport, New Zealand', icao: 'NZAA', lon: 174.792, lat: -37.0081 },
+      { name: 'Nadi International Airport, Fiji', icao: 'NFFN', lon: 177.443, lat: -17.7554 },
+      { name: 'Funafuti International Airport, Tuvalu', icao: 'NGFU', lon: 179.196, lat: -8.525 },
+      { name: 'Arorae Island Airport, Kiribati', icao: 'NGTR', lon: 176.803, lat: -2.61611 },
+      { name: 'Bucholz Army Airfield, Marshall Islands', icao: 'PKWA', lon: 167.732, lat: 8.72012 },
+      { name: 'Chuuk International Airport, Micronesia', icao: 'PTKK', lon: 151.843, lat: 7.46187 },
+      { name: 'Tinian International Airport (West Tinian Airport), Northern Mariana Islands', icao: 'PGWT', lon: 145.619, lat: 14.9992 },
+      { name: 'Antonio B. Won Pat International Airport (Guam International), Guam', icao: 'PGUM', lon: 144.796, lat: 13.4834 },
+      { name: 'Roman Tmetuchl International Airport, Palau', icao: 'PTRO', lon: 134.544, lat: 7.36731 },
+      { name: 'Mactan-Cebu International Airport, Philippines', icao: 'RPVM', lon: 123.979, lat: 10.3075 },
+      { name: 'Anduki Airfield, Brunei', icao: 'WBAK', lon: 114.376944, lat: 4.632222 },
+      { name: 'Lae Nadzab Airport, Papua New Guinea', icao: 'AYNZ', lon: 146.726, lat: -6.5698 },
+      { name: 'Nusatupe Airport, Solomon Islands', icao: 'AGGN', lon: 156.864, lat: -8.09778 },
+      { name: 'Nauru International Airport, Nauru', icao: 'ANYN', lon: 166.919, lat: -0.547458 },
+      { name: 'Santo-Pekoa International Airport, Vanuatu', icao: 'NVSS', lon: 167.22, lat: -15.505 },
+      { name: 'Noumea Magenta Airport, New Caledonia', icao: 'NWWM', lon: 166.473, lat: -22.2583 },
+    ];
+
+
+
+
+    // Define the green and red icons
+    var greenIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    var greyIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    optimizedAirports.forEach(function (airport) {
+      L.marker([airport.lat, airport.lon], { icon: greyIcon })
+        .addTo(map)
+        .bindPopup(`<b>${airport.icao}</b><br>${airport.name}`);
+    });
+
+    visitedAirports.forEach(function (airport) {
+      L.marker([airport.lat, airport.lon], { icon: greenIcon })
+        .addTo(map)
+        .bindPopup(`<b>${airport.icao}</b><br>${airport.name}`);
+    });
+
+    // Create a polyline to visualize the optimized route
+    var latlngs = optimizedAirports.map(a => [a.lat, a.lon]);
+
+    var visitedLine = L.polyline(visitedAirports.map(a => [a.lat, a.lon]), { color: 'green' }).addTo(map);
+    map.fitBounds(visitedLine.getBounds());
+
+
+    var routeLine = L.polyline(latlngs, { color: 'grey' }).addTo(map);
+
+    // Fit the map to the route bounds
+    map.fitBounds(routeLine.getBounds());
+
+
+    var lastVisited = visitedAirports[visitedAirports.length - 1];
+    var firstOptimized = optimizedAirports[0];
+
+    // Create an array of coordinates for the line.
+    var dashLineCoordinates = [
+      [lastVisited.lat, lastVisited.lon],
+      [firstOptimized.lat, firstOptimized.lon]
+    ];
+
+    // Draw a polyline with a dashed style.
+    L.polyline(dashLineCoordinates, {
+      color: 'orange',      // You can choose any color you like.
+      weight: 2,         // Adjust the weight (thickness) as needed.
+      dashArray: '10, 10' // This creates a dashed pattern: 10px dash, 10px gap.
+    }).addTo(map);
+
+
+  </script>
+</body>
+
+</html>
